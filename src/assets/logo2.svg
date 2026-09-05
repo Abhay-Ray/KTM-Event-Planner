@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c9962f"/>
+      <stop offset="50%" style="stop-color:#b8860b"/>
+      <stop offset="100%" style="stop-color:#9a7209"/>
+    </linearGradient>
+    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#d4a534"/>
+      <stop offset="50%" style="stop-color:#f0d78c"/>
+      <stop offset="100%" style="stop-color:#d4a534"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" rx="24" fill="#faf7f2"/>
+  
+  <!-- Decorative top flourish -->
+  <path d="M140 100 Q160 85 200 82 Q240 85 260 100" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="200" cy="80" r="3" fill="url(#goldGrad)" opacity="0.5"/>
+  
+  <!-- KTM Monogram -->
+  <text x="200" y="195" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="108" font-weight="400" fill="url(#goldGrad)" letter-spacing="8">KTM</text>
+  
+  <!-- Decorative line under KTM -->
+  <line x1="120" y1="215" x2="280" y2="215" stroke="url(#goldGrad)" stroke-width="1" opacity="0.4"/>
+  <line x1="150" y1="220" x2="250" y2="220" stroke="url(#shimmer)" stroke-width="0.5" opacity="0.3"/>
+  
+  <!-- Diamond accent -->
+  <polygon points="200,210 204,215 200,220 196,215" fill="url(#goldGrad)" opacity="0.7"/>
+  
+  <!-- EVENT PLANNER text -->
+  <text x="200" y="258" text-anchor="middle" font-family="'Trebuchet MS', 'Helvetica Neue', sans-serif" font-size="22" font-weight="300" fill="#8b5e3c" letter-spacing="14">EVENT</text>
+  <text x="200" y="286" text-anchor="middle" font-family="'Trebuchet MS', 'Helvetica Neue', sans-serif" font-size="18" font-weight="300" fill="#8b5e3c" letter-spacing="16">PLANNER</text>
+  
+  <!-- Bottom flourish -->
+  <path d="M155 305 Q175 300 200 298 Q225 300 245 305" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.5"/>
+  <path d="M170 312 Q185 308 200 307 Q215 308 230 312" fill="none" stroke="url(#goldGrad)" stroke-width="0.8" opacity="0.35"/>
+  
+  <!-- Subtle corner accents -->
+  <path d="M30 30 L60 30 M30 30 L30 60" fill="none" stroke="url(#goldGrad)" stroke-width="0.8" opacity="0.25"/>
+  <path d="M370 30 L340 30 M370 30 L370 60" fill="none" stroke="url(#goldGrad)" stroke-width="0.8" opacity="0.25"/>
+  <path d="M30 370 L60 370 M30 370 L30 340" fill="none" stroke="url(#goldGrad)" stroke-width="0.8" opacity="0.25"/>
+  <path d="M370 370 L340 370 M370 370 L370 340" fill="none" stroke="url(#goldGrad)" stroke-width="0.8" opacity="0.25"/>
+</svg>
