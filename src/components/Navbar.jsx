@@ -1,19 +1,19 @@
 // Navbar.jsx - UPDATED WITH WIDER CONTAINER & INCREASED NAVLINK GAP
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Calendar, User } from 'lucide-react';
-import logo from '../assets/logo2.svg';
+import React, { useState, useEffect } from "react";
+import { Menu, X, Calendar } from "lucide-react";
+import logo from "../assets/logo2.svg";
 
-export default function Navbar({ onOpenAuth, onOpenBooking, activeSection }) {
+export default function Navbar({ onOpenBooking, activeSection }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 20); 
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -22,16 +22,16 @@ export default function Navbar({ onOpenAuth, onOpenBooking, activeSection }) {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Contact', href: '#contact' },
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Services", href: "#services" },
+    { name: "Gallery", href: "#gallery" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
     <header
-      className={`knav ${isScrolled ? 'knav-scrolled' : ''} ${mounted ? 'knav-mounted' : ''}`}
+      className={`knav ${isScrolled ? "knav-scrolled" : ""} ${mounted ? "knav-mounted" : ""}`}
     >
       <div className="container knav-container">
         <div className="knav-row">
@@ -41,27 +41,43 @@ export default function Navbar({ onOpenAuth, onOpenBooking, activeSection }) {
               src={logo}
               alt="KTM Event Planner Logo"
               style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '8px',
-                objectFit: 'cover',
-                boxShadow: '0 4px 14px rgba(212, 175, 55, 0.3)',
+                width: "40px",
+                height: "40px",
+                borderRadius: "8px",
+                objectFit: "cover",
+                boxShadow: "0 4px 14px rgba(212, 175, 55, 0.3)",
               }}
             />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <span
                 className="font-serif"
                 style={{
-                  fontSize: '1.35rem',
+                  fontSize: "1.35rem",
                   fontWeight: 700,
-                  letterSpacing: '0.02em',
+                  letterSpacing: "0.02em",
                   lineHeight: 1.1,
-                  color: '#ffffff',
+                  color: "#ffffff",
                 }}
               >
-                KTM <span style={{ color: '#d4af37', fontWeight: 400, fontStyle: 'italic' }}>Event Planner</span>
+                KTM{" "}
+                <span
+                  style={{
+                    color: "#d4af37",
+                    fontWeight: 400,
+                    fontStyle: "italic",
+                  }}
+                >
+                  Event Planner
+                </span>
               </span>
-              <span style={{ fontSize: '0.65rem', color: '#9da4b0', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+              <span
+                style={{
+                  fontSize: "0.65rem",
+                  color: "#9da4b0",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                }}
+              >
                 Kathmandu
               </span>
             </div>
@@ -70,12 +86,12 @@ export default function Navbar({ onOpenAuth, onOpenBooking, activeSection }) {
           {/* Desktop Nav Links - centered */}
           <nav className="desktop-nav knav-center">
             {navLinks.map((link) => {
-              const slug = link.name.toLowerCase().replace(' ', '-');
+              const slug = link.name.toLowerCase().replace(" ", "-");
               return (
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`knav-link ${activeSection === slug ? 'is-active' : ''}`}
+                  className={`knav-link ${activeSection === slug ? "is-active" : ""}`}
                 >
                   {link.name}
                 </a>
@@ -110,23 +126,30 @@ export default function Navbar({ onOpenAuth, onOpenBooking, activeSection }) {
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
               style={{
-                color: '#e5e7eb',
-                fontSize: '1.05rem',
-                textDecoration: 'none',
+                color: "#e5e7eb",
+                fontSize: "1.05rem",
+                textDecoration: "none",
                 fontWeight: 500,
               }}
             >
               {link.name}
             </a>
           ))}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.75rem",
+              marginTop: "0.5rem",
+            }}
+          >
             <button
               className="btn-primary"
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenBooking();
               }}
-              style={{ width: '100%', justifyContent: 'center' }}
+              style={{ width: "100%", justifyContent: "center" }}
             >
               <Calendar size={16} /> Book Now
             </button>
@@ -223,21 +246,6 @@ export default function Navbar({ onOpenAuth, onOpenBooking, activeSection }) {
         .knav-link:hover::after { width: 100%; }
         .knav-link.is-active { color: #d4af37; }
         .knav-link.is-active::after { width: 100%; }
-
-        .knav-login {
-          background: transparent;
-          border: none;
-          color: #f3f4f6;
-          font-size: 0.9rem;
-          font-weight: 500;
-          cursor: pointer;
-          padding: 0.4rem 0.8rem;
-          display: flex;
-          align-items: center;
-          gap: 0.3rem;
-          transition: color 0.2s ease;
-        }
-        .knav-login:hover { color: #d4af37; }
 
         .btn-primary {
           background-color: #d4af37;

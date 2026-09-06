@@ -1,8 +1,8 @@
 // Hero.jsx - WITH PLAN YOUR EVENT BUTTON
-import React, { useEffect, useRef, useState } from 'react';
-import { Star, Sparkles, MessageCircle, Calendar } from 'lucide-react';
+import React, { useEffect, useRef, useState } from "react";
+import { Star, Sparkles, MessageCircle, Calendar } from "lucide-react";
 
-export default function Hero({ onOpenAuth, onOpenBooking }) {
+export default function Hero({ onOpenBooking }) {
   const sectionRef = useRef(null);
   const ratingInnerRef = useRef(null);
   const frameRef = useRef(null);
@@ -11,10 +11,10 @@ export default function Hero({ onOpenAuth, onOpenBooking }) {
 
   // Original images
   const heroImages = [
-    'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=80',
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=80",
   ];
 
   const extendedImages = [...heroImages, heroImages[0]];
@@ -45,7 +45,8 @@ export default function Hero({ onOpenAuth, onOpenBooking }) {
     if (!section) return;
 
     const applyTransform = (el, x, y, strength) => {
-      if (el) el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      if (el)
+        el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
     };
 
     const handleMouseMove = (e) => {
@@ -62,25 +63,28 @@ export default function Hero({ onOpenAuth, onOpenBooking }) {
       applyTransform(ratingInnerRef.current, 0, 0, 0);
     };
 
-    section.addEventListener('mousemove', handleMouseMove);
-    section.addEventListener('mouseleave', handleMouseLeave);
+    section.addEventListener("mousemove", handleMouseMove);
+    section.addEventListener("mouseleave", handleMouseLeave);
     return () => {
-      section.removeEventListener('mousemove', handleMouseMove);
-      section.removeEventListener('mouseleave', handleMouseLeave);
+      section.removeEventListener("mousemove", handleMouseMove);
+      section.removeEventListener("mouseleave", handleMouseLeave);
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
     };
   }, []);
 
   const scrollToNext = () => {
-    const el = document.getElementById('about');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById("about");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   // WhatsApp handler
   const handleWhatsApp = () => {
-    const phoneNumber = '9779801234567';
-    const message = 'Hello! I\'d like to plan an event with KTM Event Planner.';
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    const phoneNumber = "9779801234567";
+    const message = "Hello! I'd like to plan an event with KTM Event Planner.";
+    window.open(
+      `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
+      "_blank",
+    );
   };
 
   return (
@@ -94,13 +98,13 @@ export default function Hero({ onOpenAuth, onOpenBooking }) {
                 key={`slide-${index}`}
                 className="khero-slide"
                 style={{
-                  position: 'absolute',
+                  position: "absolute",
                   inset: 0,
                   transform: `translateX(${offset * 100}%)`,
                   transition: isTransitioning
-                    ? 'transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                    : 'none',
-                  willChange: 'transform',
+                    ? "transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+                    : "none",
+                  willChange: "transform",
                   zIndex: offset === 0 ? 1 : 0,
                 }}
               >
@@ -108,10 +112,10 @@ export default function Hero({ onOpenAuth, onOpenBooking }) {
                   src={img}
                   alt={`Luxury event venue ${index + 1}`}
                   style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
                   }}
                 />
               </div>
@@ -127,13 +131,22 @@ export default function Hero({ onOpenAuth, onOpenBooking }) {
           <span>Be a Guest at Your Own Event</span>
         </div>
 
-        <h1 className="khero-headline" style={{ fontFamily: "'Playfair Display', serif" }}>
-          <div className="khero-line">Plan <span className="khero-word-accent">beautifully.</span></div>
-          <div className="khero-line">Celebrate <span className="khero-word-strong">effortlessly.</span></div>
+        <h1
+          className="khero-headline"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
+          <div className="khero-line">
+            Plan <span className="khero-word-accent">beautifully.</span>
+          </div>
+          <div className="khero-line">
+            Celebrate <span className="khero-word-strong">effortlessly.</span>
+          </div>
         </h1>
 
         <p className="khero-desc">
-          Kathmandu's premier event planning company. We create meaningful and memorable weddings, corporate galas, and celebrations with care, creativity, and precision.
+          Kathmandu's premier event planning company. We create meaningful and
+          memorable weddings, corporate galas, and celebrations with care,
+          creativity, and precision.
         </p>
 
         {/* CTA Button - Plan Your Event */}
@@ -148,38 +161,42 @@ export default function Hero({ onOpenAuth, onOpenBooking }) {
         onClick={handleWhatsApp}
         className="khero-whatsapp"
         style={{
-          position: 'fixed',
-          bottom: '2rem',
-          right: '2rem',
+          position: "fixed",
+          bottom: "2rem",
+          right: "2rem",
           zIndex: 999,
-          width: '60px',
-          height: '60px',
-          borderRadius: '50%',
-          backgroundColor: '#25D366',
-          border: 'none',
-          color: '#ffffff',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 20px rgba(37, 211, 102, 0.4)',
-          transition: 'all 0.3s ease',
-          animation: 'whatsappPulse 2s ease-in-out infinite',
+          width: "60px",
+          height: "60px",
+          borderRadius: "50%",
+          backgroundColor: "#25D366",
+          border: "none",
+          color: "#ffffff",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 4px 20px rgba(37, 211, 102, 0.4)",
+          transition: "all 0.3s ease",
+          animation: "whatsappPulse 2s ease-in-out infinite",
         }}
         onMouseEnter={(e) => {
-          e.target.style.transform = 'scale(1.1)';
-          e.target.style.boxShadow = '0 6px 30px rgba(37, 211, 102, 0.6)';
+          e.target.style.transform = "scale(1.1)";
+          e.target.style.boxShadow = "0 6px 30px rgba(37, 211, 102, 0.6)";
         }}
         onMouseLeave={(e) => {
-          e.target.style.transform = 'scale(1)';
-          e.target.style.boxShadow = '0 4px 20px rgba(37, 211, 102, 0.4)';
+          e.target.style.transform = "scale(1)";
+          e.target.style.boxShadow = "0 4px 20px rgba(37, 211, 102, 0.4)";
         }}
         aria-label="Contact us on WhatsApp"
       >
         <MessageCircle size={30} />
       </button>
 
-      <button className="khero-scroll-cue" onClick={scrollToNext} aria-label="Scroll to explore">
+      <button
+        className="khero-scroll-cue"
+        onClick={scrollToNext}
+        aria-label="Scroll to explore"
+      >
         <span className="khero-scroll-line" />
       </button>
 
