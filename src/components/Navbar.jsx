@@ -1,4 +1,4 @@
-// Navbar.jsx - UPDATED WITH WIDER CONTAINER & INCREASED NAVLINK GAP
+// Navbar.jsx - WITH MODERN ANIMATED HAMBURGER MENU (Original Icons)
 import React, { useState, useEffect } from "react";
 import { Menu, X, Calendar } from "lucide-react";
 import logo from "../assets/logo2.svg";
@@ -20,6 +20,18 @@ export default function Navbar({ onOpenBooking, activeSection }) {
     const t = setTimeout(() => setMounted(true), 150);
     return () => clearTimeout(t);
   }, []);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { name: "Home", href: "#home" },
@@ -106,53 +118,49 @@ export default function Navbar({ onOpenBooking, activeSection }) {
             </button>
           </div>
 
-          {/* Mobile Hamburger Icon */}
+          {/* Mobile Hamburger Icon - Original */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="mobile-toggle knav-toggle"
+            className={`mobile-toggle knav-toggle ${mobileMenuOpen ? "is-active" : ""}`}
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+            {mobileMenuOpen ? (
+              <X size={26} className="hamburger-icon" />
+            ) : (
+              <Menu size={26} className="hamburger-icon" />
+            )}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer - Full Height */}
       {mobileMenuOpen && (
-        <div className="knav-drawer">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                color: "#e5e7eb",
-                fontSize: "1.05rem",
-                textDecoration: "none",
-                fontWeight: 500,
-              }}
-            >
-              {link.name}
-            </a>
-          ))}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.75rem",
-              marginTop: "0.5rem",
-            }}
-          >
-            <button
-              className="btn-primary"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenBooking();
-              }}
-              style={{ width: "100%", justifyContent: "center" }}
-            >
-              <Calendar size={16} /> Book Now
-            </button>
+        <div className="knav-drawer-overlay" onClick={() => setMobileMenuOpen(false)}>
+          <div className="knav-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="knav-drawer-content">
+              {navLinks.map((link, index) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="knav-drawer-link"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {link.name}
+                </a>
+              ))}
+              <div className="knav-drawer-actions">
+                <button
+                  className="btn-primary knav-drawer-btn"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenBooking();
+                  }}
+                >
+                  <Calendar size={18} /> Book Now
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -271,6 +279,9 @@ export default function Navbar({ onOpenBooking, activeSection }) {
           box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
         }
 
+        /* ============================================
+           HAMBURGER TOGGLE - ORIGINAL ICONS
+           ============================================ */
         .knav-toggle {
           background: transparent;
           border: none;
@@ -278,15 +289,162 @@ export default function Navbar({ onOpenBooking, activeSection }) {
           cursor: pointer;
           padding: 0.4rem;
           display: none;
+          z-index: 1001;
+          position: relative;
+          width: 44px;
+          height: 44px;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .knav-toggle:hover {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .knav-toggle .hamburger-icon {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .knav-toggle.is-active .hamburger-icon {
+          transform: rotate(90deg);
+          color: #d4af37;
+        }
+
+        /* ============================================
+           MOBILE DRAWER - FULL HEIGHT
+           ============================================ */
+        .knav-drawer-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 999;
+          background-color: rgba(0, 0, 0, 0.7);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+          from { 
+            opacity: 0; 
+            transform: translateY(20px); 
+          }
+          to { 
+            opacity: 1; 
+            transform: translateY(0); 
+          }
         }
 
         .knav-drawer {
-          background-color: #16161a;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          padding: 1.5rem;
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 85%;
+          max-width: 400px;
+          height: 100vh;
+          height: 100dvh;
+          background: linear-gradient(165deg, #1a1a1e 0%, #0b0b0d 100%);
+          border-left: 1px solid rgba(255, 255, 255, 0.06);
+          padding: 5rem 2rem 2rem;
           display: flex;
           flex-direction: column;
-          gap: 1.2rem;
+          animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow-y: auto;
+          box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .knav-drawer-content {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          flex: 1;
+          justify-content: center;
+          padding: 0;
+        }
+
+        .knav-drawer-link {
+          color: #e5e7eb;
+          font-size: 1.6rem;
+          font-weight: 500;
+          text-decoration: none;
+          padding: 0.75rem 1rem;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          display: block;
+          letter-spacing: 0.02em;
+          opacity: 0;
+          animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          position: relative;
+        }
+
+        .knav-drawer-link::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%) scaleX(0);
+          width: 3px;
+          height: 24px;
+          background: #d4af37;
+          border-radius: 2px;
+          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transform-origin: left;
+        }
+
+        .knav-drawer-link:hover {
+          color: #d4af37;
+          padding-left: 1.5rem;
+          background: rgba(212, 175, 55, 0.05);
+        }
+
+        .knav-drawer-link:hover::before {
+          transform: translateY(-50%) scaleX(1);
+        }
+
+        .knav-drawer-link:active {
+          color: #d4af37;
+          transform: scale(0.98);
+        }
+
+        .knav-drawer-actions {
+          margin-top: 1.5rem;
+          padding-top: 1.5rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.06);
+          opacity: 0;
+          animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+        }
+
+        .knav-drawer-btn {
+          width: 100%;
+          justify-content: center;
+          padding: 0.9rem 1.5rem;
+          font-size: 1rem;
+          border-radius: 10px;
+          background: linear-gradient(135deg, #d4af37 0%, #e5c158 100%);
+          color: #111113;
+          font-weight: 700;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .knav-drawer-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
         }
 
         /* Responsive - Large screens */
@@ -335,7 +493,7 @@ export default function Navbar({ onOpenBooking, activeSection }) {
             display: none !important;
           }
           .knav-toggle {
-            display: block !important;
+            display: flex !important;
           }
         }
 
@@ -350,6 +508,25 @@ export default function Navbar({ onOpenBooking, activeSection }) {
           .knav-brand span {
             font-size: 1.1rem;
           }
+          .knav-drawer {
+            width: 90%;
+            padding: 4.5rem 1.5rem 1.5rem;
+          }
+          .knav-drawer-link {
+            font-size: 1.3rem;
+            padding: 0.6rem 0.8rem;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .knav-drawer {
+            width: 95%;
+            padding: 4rem 1.25rem 1.25rem;
+          }
+          .knav-drawer-link {
+            font-size: 1.1rem;
+            padding: 0.5rem 0.6rem;
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -357,6 +534,23 @@ export default function Navbar({ onOpenBooking, activeSection }) {
             transition: none !important;
             opacity: 1 !important;
             transform: none !important;
+          }
+          .knav-drawer-overlay {
+            animation: none !important;
+          }
+          .knav-drawer {
+            animation: none !important;
+          }
+          .knav-drawer-link {
+            animation: none !important;
+            opacity: 1 !important;
+          }
+          .knav-drawer-actions {
+            animation: none !important;
+            opacity: 1 !important;
+          }
+          .knav-toggle .hamburger-icon {
+            transition: none !important;
           }
         }
       `}</style>
