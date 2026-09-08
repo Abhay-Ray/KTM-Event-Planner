@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Sparkles, Users, MapPin, Calendar, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export default function Services({ onOpenBooking }) {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-
   const events = [
     {
       id: 'wedding',
@@ -48,7 +46,7 @@ export default function Services({ onOpenBooking }) {
     {
       id: 'parties',
       category: 'parties',
-      title: 'Cocktail Soirées & Private Parties',
+      title: 'Cocktail Soirees & Private Parties',
       subtitle: 'Exclusive private gatherings & VIP celebrations',
       image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80',
       capacity: '20 - 150 Guests',
@@ -66,9 +64,6 @@ export default function Services({ onOpenBooking }) {
       highlights: ['Guest Travel & Accommodations Log', 'Welcome Kits & Local Experiences', 'End-to-end Onsite Crew'],
     },
   ];
-
-  const filteredEvents =
-    selectedCategory === 'all' ? events : events.filter((e) => e.category === selectedCategory);
 
   return (
     <section
@@ -99,49 +94,11 @@ export default function Services({ onOpenBooking }) {
           <p style={{ color: '#a1a1aa', fontSize: '1.05rem', marginTop: '0.5rem' }}>
             Whether an intimate dinner or a 2,000-person summit, KTM Event Planner delivers precision and elegance.
           </p>
-
-          {/* Category Filter Pills */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '0.5rem',
-              flexWrap: 'wrap',
-              marginTop: '2rem',
-            }}
-          >
-            {[
-              { id: 'all', label: 'All Event Types' },
-              { id: 'wedding', label: 'Weddings' },
-              { id: 'corporate', label: 'Corporate' },
-              { id: 'birthday', label: 'Birthdays' },
-              { id: 'gala', label: 'Galas & Awards' },
-              { id: 'destination', label: 'Destination' },
-            ].map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                style={{
-                  padding: '0.5rem 1.2rem',
-                  borderRadius: '30px',
-                  border: selectedCategory === cat.id ? '1px solid #d4af37' : '1px solid rgba(255,255,255,0.12)',
-                  backgroundColor: selectedCategory === cat.id ? '#d4af37' : 'rgba(255,255,255,0.03)',
-                  color: selectedCategory === cat.id ? '#111113' : '#d1d5db',
-                  fontWeight: selectedCategory === cat.id ? 600 : 500,
-                  fontSize: '0.88rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Event Cards Grid - 3 columns with wider cards */}
         <div className="grid-3 services-grid">
-          {filteredEvents.map((item) => (
+          {events.map((item) => (
             <div
               key={item.id}
               className="glass-card"

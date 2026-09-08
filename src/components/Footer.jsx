@@ -111,7 +111,7 @@ export default function Footer({ showToast }) {
                 letterSpacing: "0.05em",
               }}
             >
-              Platform
+              Quick Links
             </h4>
             <ul
               style={{

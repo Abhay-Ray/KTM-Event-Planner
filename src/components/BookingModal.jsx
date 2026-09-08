@@ -140,7 +140,7 @@ export default function BookingModal({ isOpen, onClose, showToast }) {
 
               <div>
                 <label style={{ display: 'block', color: '#d1d5db', fontSize: '0.82rem', marginBottom: '0.35rem' }}>
-                  Mobile / WhatsApp *
+                  Phone Number*
                 </label>
                 <input
                   type="tel"
@@ -161,7 +161,7 @@ export default function BookingModal({ isOpen, onClose, showToast }) {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
                 <div>
                   <label style={{ display: 'block', color: '#d1d5db', fontSize: '0.82rem', marginBottom: '0.35rem' }}>
                     Preferred Date *
@@ -180,15 +180,16 @@ export default function BookingModal({ isOpen, onClose, showToast }) {
                       borderRadius: '6px',
                       fontSize: '0.88rem',
                       outline: 'none',
+                      minWidth: '100%',
                     }}
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', color: '#d1d5db', fontSize: '0.82rem', marginBottom: '0.35rem' }}>
+                  {/* <label style={{ display: 'block', color: '#d1d5db', fontSize: '0.82rem', marginBottom: '0.35rem' }}>
                     Time Slot
-                  </label>
-                  <select
+                  </label> */}
+                  {/* <select
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
                     style={{
@@ -206,7 +207,7 @@ export default function BookingModal({ isOpen, onClose, showToast }) {
                     <option value="11:30 AM">11:30 AM</option>
                     <option value="02:00 PM">02:00 PM</option>
                     <option value="04:30 PM">04:30 PM</option>
-                  </select>
+                  </select> */}
                 </div>
               </div>
 

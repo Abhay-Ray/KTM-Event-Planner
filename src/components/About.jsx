@@ -1,12 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Award, ShieldCheck, HeartHandshake, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function About() {
+  const [counters, setCounters] = useState({
+    events: 0,
+    experience: 0,
+    satisfaction: 0,
+    venues: 0
+  });
+  const [isVisible, setIsVisible] = useState(false);
+  const statsRef = useRef(null);
+
   const stats = [
-    { label: 'Events Organized', value: '10,000+' },
-    { label: 'Managed Budgets', value: '$50M+' },
-    { label: 'Client Satisfaction', value: '99.8%' },
-    { label: 'Partnered Venues', value: '450+' },
+    { 
+      key: 'events',
+      label: 'Events Organized', 
+      value: '1000+',
+      target: 1000,
+      suffix: '+'
+    },
+    { 
+      key: 'experience',
+      label: 'Experience', 
+      value: '5 years+',
+      target: 5,
+      suffix: ' years+'
+    },
+    { 
+      key: 'satisfaction',
+      label: 'Client Satisfaction', 
+      value: '99.8%',
+      target: 99.8,
+      suffix: '%',
+      isDecimal: true
+    },
+    { 
+      key: 'venues',
+      label: 'Partnered Venues', 
+      value: '450+',
+      target: 450,
+      suffix: '+'
+    },
   ];
 
   const pillars = [
@@ -26,6 +60,100 @@ export default function About() {
       desc: 'We empower hosts to be present at their own celebrations rather than managing behind-the-scenes chaos.',
     },
   ];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.3, triggerOnce: true }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => {
+      if (statsRef.current) {
+        observer.unobserve(statsRef.current);
+      }
+    };
+  }, [isVisible]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const duration = 2500; // 2.5 seconds for smoother animation
+    const startTime = Date.now();
+    
+    const targetValues = {
+      events: 1000,
+      experience: 5,
+      satisfaction: 99.8,
+      venues: 450
+    };
+
+    const startValues = {
+      events: 0,
+      experience: 0,
+      satisfaction: 0,
+      venues: 0
+    };
+
+    const animateCounter = () => {
+      const currentTime = Date.now();
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // EaseOutQuart function for smooth deceleration
+      const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+      const easedProgress = easeOutQuart(progress);
+
+      const newCounters = {};
+      Object.keys(targetValues).forEach((key) => {
+        const target = targetValues[key];
+        const start = startValues[key];
+        const current = start + (target - start) * easedProgress;
+        
+        if (key === 'satisfaction') {
+          newCounters[key] = Number(current.toFixed(1));
+        } else {
+          newCounters[key] = Math.round(current);
+        }
+      });
+      
+      setCounters(newCounters);
+
+      if (progress < 1) {
+        requestAnimationFrame(animateCounter);
+      } else {
+        // Ensure final values are exact
+        setCounters({
+          events: 1000,
+          experience: 5,
+          satisfaction: 99.8,
+          venues: 450
+        });
+      }
+    };
+
+    requestAnimationFrame(animateCounter);
+
+    return () => {
+      // Cleanup if component unmounts
+    };
+  }, [isVisible]);
+
+  const formatDisplayValue = (key, value) => {
+    if (key === 'experience') return `${value} years+`;
+    if (key === 'satisfaction') return `${value}%`;
+    if (key === 'events' || key === 'venues') return `${value}+`;
+    return value;
+  };
 
   return (
     <section
@@ -160,6 +288,7 @@ export default function About() {
 
         {/* Stats Grid */}
         <div
+          ref={statsRef}
           style={{
             backgroundColor: '#18181c',
             border: '1px solid rgba(255,255,255,0.08)',
@@ -174,8 +303,18 @@ export default function About() {
         >
           {stats.map((st, i) => (
             <div key={i}>
-              <h3 className="font-serif" style={{ fontSize: '2.8rem', color: '#d4af37', fontWeight: 700, lineHeight: 1 }}>
-                {st.value}
+              <h3 
+                className="font-serif" 
+                style={{ 
+                  fontSize: '2.8rem', 
+                  color: '#d4af37', 
+                  fontWeight: 700, 
+                  lineHeight: 1,
+                  transition: 'all 0.3s ease',
+                  display: 'inline-block',
+                }}
+              >
+                {formatDisplayValue(st.key, counters[st.key])}
               </h3>
               <p style={{ fontSize: '0.9rem', color: '#9da4b0', marginTop: '0.5rem', fontWeight: 500 }}>
                 {st.label}

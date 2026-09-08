@@ -338,7 +338,7 @@ export default function Hero({ onOpenBooking }) {
           background-color: #d4af37;
           color: #111113;
           padding: 0.85rem 2.5rem;
-          border-radius: 4px;
+          border-radius: 10px;
           border: none;
           font-weight: 600;
           font-size: 1rem;
@@ -429,12 +429,20 @@ export default function Hero({ onOpenBooking }) {
 
         @media (max-width: 480px) {
           .khero-headline {
+            display:flex;
+            flex-direction:column;
+            gap:10px;
             font-size: clamp(1.8rem, 8vw, 2.2rem);
           }
           .khero-line {
             white-space: normal;
           }
+            .khero-content { 
+            margin-top:150px
+
+          }
         }
+
 
         @media (prefers-reduced-motion: reduce) {
           .khero-slide,
